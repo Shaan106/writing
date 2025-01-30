@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 components = ['AVG', 'BBF', 'FFT', 'PWXC', 'SVM', 'THR', 'TKEO']
 total_power = [0.0003219456, 0.030179328, 2.84672, 0.002269184, 0.003465, 2.8e-10, 0.03489792]
 
+# # Create a dictionary mapping components to their total power
+# component_power_dict = dict(zip(components, total_power))
+# print(component_power_dict)
+
 # Create a figure for linear scale
 plt.figure(figsize=(7, 6))
 
