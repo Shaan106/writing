@@ -58,7 +58,7 @@ minor_ticks = [x * 10**i for i in range(4, 7) for x in range(2, 10)]
 plt.gca().set_yticks(minor_ticks, minor=True)  # Adding detailed minor ticks to ensure visibility
 
 # Adding axis labels
-plt.xlabel('Model')
+plt.xlabel('Pipeline')
 plt.ylabel('Latency (s)')
 
 # Adjusting layout to ensure all labels and titles are visible
