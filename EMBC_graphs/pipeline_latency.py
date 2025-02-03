@@ -4,7 +4,7 @@ import numpy as np
 components = ['AVG', 'BBF', 'FFT', 'PWXC', 'SVM', 'THR', 'TKEO']
 total_latency = [56852.48, 67584.0, 5132779.52, 75776.0, 14.32,  0.86, 63078.4]
 
-# Data for components with two bars
+# Data for the components and their total latency
 shiao_components = {
     'THR': 0.86,
     'PWXC': 75776.0,

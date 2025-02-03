@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-# Data for the bar plot
+# Data for the accuracy of the models
 models = ['Shiao et al.', 'NEO']
 accuracies = [89, 75]
 

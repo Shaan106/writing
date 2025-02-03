@@ -14,7 +14,7 @@ neo_components = {
     'THR': 2.8e-10,
     'AVG': 0.0003219456,
     'SVM': 0.003465,
-    'TKEO': 0.03489792,
+    'TKEO': 0.03489792, 
 }
 
 # Data for the bar plot

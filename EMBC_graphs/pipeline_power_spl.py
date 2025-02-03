@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Data for components with two bars
+# Data for the components and their total power
 shiao_components = {
     'THR': 2.8e-10,
     'PWXC': 0.002269184,
