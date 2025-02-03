@@ -18,3 +18,4 @@ plt.ylabel('Accuracy (%)')
 
 # Save the plot
 plt.savefig('plots/model_accuracy.png')
+

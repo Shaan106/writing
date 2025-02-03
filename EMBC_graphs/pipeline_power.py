@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import numpy as np
+from matplotlib.ticker import AutoMinorLocator, LogFormatterSciNotation
 
 # Data for components with two bars
 shiao_components = {
@@ -9,7 +9,6 @@ shiao_components = {
     'BBF': 0.030179328,
     'FFT': 2.84672,
 }
-
 neo_components = {
     'THR': 2.8e-10,
     'AVG': 0.0003219456,
@@ -23,19 +22,42 @@ models = ['Shiao et al.', 'NEO']
 shiao_sum = sum(shiao_components.values())
 neo_sum = sum(neo_components.values())
 
-power_consumption = [shiao_sum, neo_sum]
+power = [shiao_sum, neo_sum]
 
-plt.figure(figsize=(7, 6))
-# Create the bar plot with transparent colors and thin boundary lines
-plt.bar(models, power_consumption, color=['orange', 'lightskyblue'], edgecolor='black', alpha=0.7)
+# Set the font details
+plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 
-# Add gridlines
-plt.grid(axis='y', linestyle='--', alpha=0.6)
+# Standardizing the figure size
+plt.figure(figsize=(3.5, 3.5))
 
-# Add labels and title
-plt.xlabel('Model')
-plt.ylabel('Power Consumption (W)')
-# plt.title('Power Consumption of Seizure Detection Models')
+# Create the bar plot with specified colors and full opacity
+plt.bar(models, power, color=['#8fbc8f', '#ccffcc'], edgecolor='black', alpha=1, zorder=3)
 
-# Save the plot
-plt.savefig('plots/model_power_consumption.png')
+# Add gridlines for major and explicitly for minor
+plt.grid(True, which='major', linestyle='-', linewidth=0.7, color='grey', alpha=0.9)  # Darker major lines
+plt.grid(True, which='minor', linestyle=':', linewidth=0.5, color='grey', alpha=0.5)  # Dotted minor lines
+
+# Setting up the y-axis with log scale
+plt.yscale('log')
+plt.gca().yaxis.set_minor_locator(AutoMinorLocator())
+plt.gca().yaxis.set_major_formatter(LogFormatterSciNotation())
+plt.gca().yaxis.set_minor_formatter(LogFormatterSciNotation(minor_thresholds=(2, 0.5)))
+
+# Explicitly defining major and minor ticks on y-axis
+plt.ylim(bottom=10**-2, top=10**1)  # Setting the limits to explicitly include from 10^-2 to 10^1
+plt.gca().set_yticks([10**x for x in range(-2, 2)])  # Major ticks from 10^-2 to 10^1
+minor_ticks = [x * 10**i for i in range(-2, 1) for x in range(2, 10)]
+plt.gca().set_yticks(minor_ticks, minor=True)  # Adding detailed minor ticks to ensure visibility
+
+# Adding axis labels
+plt.xlabel('Pipeline')
+plt.ylabel('Power (W)')
+
+# Adjusting layout to ensure all labels and titles are visible
+plt.tight_layout()
+
+# Save the plot as a PDF
+plt.savefig('./plots/pipeline_power.pdf', format='pdf')
+
+# Display the plot
+plt.show()
