@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 
 # Data for the bar plot
-models = ['Shiao et al.', 'NEO']
+models = ['Pipeline 1', 'Pipeline 2']
 accuracies = [89, 75]
 
 # Set the font details
@@ -11,8 +11,8 @@ plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 # Standardizing the figure size
 plt.figure(figsize=(3.5, 3.5))
 
-# Create the bar plot with specified colors and full opacity
-plt.bar(models, accuracies, color=['#8fbc8f', '#ccffcc'], edgecolor='black', alpha=1, zorder=3)
+# Create the bar plot with specified colors, full opacity, and modified bar width
+plt.bar(models, accuracies, color=[(18/255, 53/255, 36/255), (247/255, 252/255, 245/255)], edgecolor='black', alpha=1, width=0.6, zorder=3)
 
 # Add gridlines with different styles for major and minor
 plt.grid(True, which='major', linestyle='-', color='grey', alpha=0.8, zorder=0)  # Stronger alpha for major lines
@@ -26,7 +26,7 @@ plt.minorticks_on()  # Ensure that minor ticks are on
 plt.ylim(0, 100)
 
 # Add labels
-plt.xlabel('Pipeline')
+plt.xlabel('Approach')
 plt.ylabel('Accuracy (%)')
 
 # Adjust layout to ensure all titles and labels are visible
