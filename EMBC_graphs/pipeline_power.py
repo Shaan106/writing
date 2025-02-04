@@ -48,6 +48,7 @@ plt.ylim(bottom=10**0, top=10**4)  # Setting the limits to explicitly include fr
 plt.gca().set_yticks([10**x for x in range(0, 5)])  # Major ticks from 10^-2 to 10^1
 minor_ticks = [x * 10**i for i in range(0, 4) for x in range(2, 10)]
 plt.gca().set_yticks(minor_ticks, minor=True)  # Adding detailed minor ticks to ensure visibility
+plt.xticks(range(len(models)), models)
 
 # Adding axis labels
 plt.xlabel('Approach')

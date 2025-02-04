@@ -15,12 +15,15 @@ plt.figure(figsize=(3.5, 3.5))
 plt.bar(models, accuracies, color=[(18/255, 53/255, 36/255), (247/255, 252/255, 245/255)], edgecolor='black', alpha=1, width=0.6, zorder=3)
 
 # Add gridlines with different styles for major and minor
-plt.grid(True, which='major', linestyle='-', color='grey', alpha=0.8, zorder=0)  # Stronger alpha for major lines
-plt.grid(True, which='minor', linestyle=':', color='grey', alpha=0.5, zorder=0)  # Dotted and lighter for minor lines
+plt.grid(True, which='major', linestyle='-', linewidth=0.7, color='grey', alpha=0.9)
+plt.grid(True, which='minor', linestyle=':', linewidth=0.5, color='grey', alpha=0.5)  # Dotted minor lines
 
 # Set up minor locator for y-axis
 plt.gca().yaxis.set_minor_locator(AutoMinorLocator())
 plt.minorticks_on()  # Ensure that minor ticks are on
+plt.xticks(range(len(models)), models)
+plt.gca().xaxis.set_minor_locator(AutoMinorLocator(0))  # Disable minor ticks on x-axis
+
 
 # Set the y-axis limits to include up to 100
 plt.ylim(0, 100)
