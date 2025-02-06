@@ -5,13 +5,18 @@ from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.colors as mcolors
 import matplotlib.patches as mpatches
 
-print(plt.__file__)
 
 # Data
 memory_types = ['STT', 'PCM', 'FeFET', 'RRAM']
-areas = [0.352215178, 0.249885986, 0.150765438, 0.358045268]
-powers = [0.037975518144, 0.006268435152, 0.007346379504, 0.025138752816]
-life_expectancies = [476833520.2520733, 95366.70405041466, 47683.35202520733, 476.8335202520733]
+# areas = [0.352215178, 0.249885986, 0.150765438, 0.358045268]
+# powers = [0.037975518144, 0.006268435152, 0.007346379504, 0.025138752816]
+# life_expectancies = [476833520.2520733, 95366.70405041466, 47683.35202520733, 476.8335202520733]
+
+areas = [314.578, 176.294, 102.31, 309.071]
+powers = [0.280862175816, 0.147584003664, 0.244978582752, 0.274582730532]
+life_expectancies = [1907334081.0082932, 381466.8162016586, 190733.4081008293, 1907.3340810082932]
+
+areas = [x / 100 for x in areas] # convert to cm^2
 
 colors = []  # To hold color values
 
@@ -33,8 +38,8 @@ ax = fig.add_subplot(111, projection='3d')
 fig.subplots_adjust(left=0.02, right=0.849)
 
 # Set the width and depth of the bars as specified
-bar_width = 0.8
-bar_depth = 0.03
+bar_width = 0.6
+bar_depth = 0.2
 
 # Plotting data
 sorted_indices = np.argsort(life_expectancies)  # Sort by life expectancy for plotting
@@ -43,7 +48,7 @@ for i in sorted_indices:
 
 # Setting labels and applying log scale on the life expectancy axis
 ax.set_xlabel('Life Expectancy (s)', labelpad=15)
-ax.set_ylabel('Area ($mm^2$)', labelpad=15)
+ax.set_ylabel('Area ($cm^2$)', labelpad=15)
 ax.set_zlabel('Power (mW)', labelpad=15)
 
 # Adjusting x-axis ticks for log scale to display up to 10^10
@@ -53,6 +58,8 @@ ax.set_xticks(tick_vals)
 ax.set_xticklabels([f"$10^{{{int(x)}}}$" for x in tick_vals])  # Display in scientific notation
 minor_ticks = []
 for val in tick_vals:
+    if val == 10.:
+        continue
     base = 10**val
     minor_ticks.extend([3*base, 5*base, 7*base, 9*base])
 
@@ -65,12 +72,12 @@ minor_tick_positions = np.log10(minor_ticks)
 # Add the minor ticks to the plot
 ax.set_xticks(minor_tick_positions, minor=True)
 
-ax.set_yticks(np.arange(0.1, 0.41, 0.1))
-ax.set_yticks(np.arange(0.1, 0.41, 0.05), minor=True)
+ax.set_yticks(np.arange(1, 4.1, 1))
+ax.set_yticks(np.arange(1, 4.1, 0.5), minor=True)
 
 # Adjusting z-axis ticks to show increments from 0 to 0.04 by 0.01
-ax.set_zticks(np.arange(0, 0.041, 0.01))
-ax.set_zticks(np.arange(0, 0.041, 0.005), minor=True)
+ax.set_zticks(np.arange(0, 0.31, 0.1))
+ax.set_zticks(np.arange(0, 0.31, 0.05), minor=True)
 # ax.set_zticklabels([f"{z:.2f}" for z in z_ticks])
 
 # y_ticks = np.arange(0, 0.041, 0.01)
@@ -78,9 +85,9 @@ ax.set_zticks(np.arange(0, 0.041, 0.005), minor=True)
 # ax.set_yticks(y_ticks_minor, minor=True)
 # ax.set_yticks(y_ticks)
 
-ax.set_xlim(2, 10)
-ax.set_ylim(0.1, 0.4)
-ax.set_zlim(0, 0.04)
+# ax.set_xlim(2, 10)
+# ax.set_ylim(0.1, 0.4)
+# ax.set_zlim(0, 0.04)
 
 black = (175/255, 176/255, 176/255, 1)
 
@@ -100,7 +107,7 @@ ax.tick_params(axis='z', labelsize=10)
 
 # Create a custom legend for cell types
 legend_handles = [mpatches.Patch(facecolor=color, label=memory, edgecolor='black') for color, memory in zip(colors, memory_types)]
-legend = ax.legend(legend_handles, memory_types, ncol=4, loc='upper center', bbox_to_anchor=(0.58, 1.05))
+legend = ax.legend(legend_handles, memory_types, ncol=4, loc='upper center', bbox_to_anchor=(0.58, 1.1))
 
 plt.tight_layout()
 
@@ -108,98 +115,3 @@ plt.tight_layout()
 plt.savefig('./plots/storage.pdf', format='pdf')
 
 plt.show()
-
-
-
-# def three_dim():
-#     """
-#     Creates 3D plot for Spike Sorting and Seizure Detection
-
-#     x-axis is input data rate (Mbps)
-#     y-axis is power (mW)
-#     z-axis is throughput (Mbps)
-#     """
-#     fig = plt.figure()
-#     ax = fig.add_subplot(1, 1, 1, projection="3d")
-
-#     read_input()
-
-#     x1, y1 = np.meshgrid(sensor_rate_range(), maxpower_range())
-#     zss = np.zeros((len(x1), len(x1[0])))
-#     zsz = np.zeros((len(x1), len(x1[0])))
-
-#     for i, maxpower in enumerate(maxpower_range()):
-#         sz = seizure[i] * CHAN_RATE
-#         ss = spike[i] * CHAN_RATE
-
-#         for j, rate in enumerate(sensor_rate_range()):
-
-#             if rate <= sz:
-#                 zsz[i][j] = rate
-#             else:
-#                 zsz[i][j] = sz
-
-#             if rate <= ss:
-#                 zss[i][j] = rate
-#             else:
-#                 zss[i][j] = ss
-
-#     ax.plot_surface(
-#         x1,
-#         y1,
-#         zss,
-#         color=color_group["red"],
-#         alpha=0.3
-#     )
-#     ax.plot_surface(
-#         x1,
-#         y1,
-#         zsz,
-#         color=color_group["blue"],
-#         alpha=0.3
-#     )
-#     ax.plot_wireframe(
-#         x1,
-#         y1,
-#         zss,
-#         label="Spike Sorting",
-#         color=color_group["red"]
-#     )
-#     ax.plot_wireframe(
-#         x1,
-#         y1,
-#         zsz,
-#         label="Seizure Detection",
-#         color=color_group["blue"]
-#     )
-#     ax.set_zlabel("Throughput (Mbps)")
-#     ax.set_ylabel("Power (mW)")
-#     ax.set_xlabel("Sensor Data Rate (Mbps)")
-
-#     ax.set_xticks([0, 50, 100, 150])
-#     ax.set_xticks(ticks=sensor_rate_range(), minor=True)
-
-#     ax.set_yticks([6, 9, 12, 15])
-#     ax.set_yticks(ticks=maxpower_range(), minor=True)
-
-#     ax.set_zticks([0, 25, 50, 75, 100, 125])
-#     ax.set_zticks(ticks=[x for x in range(0, 125, 5)], minor=True)
-
-#     black = (0, 0, 0, 1)
-#     """
-#     ax.zaxis.set_gridline_color((0, black))
-#     ax.xaxis.set_gridline_color((0, black))
-#     ax.yaxis.set_gridline_color((6, black))
-#     """
-
-#     ax.zaxis._axinfo["grid"]["linestyle"] = ":"
-#     ax.yaxis._axinfo["grid"]["linestyle"] = ":"
-#     ax.xaxis._axinfo["grid"]["linestyle"] = ":"
-
-#     plt.legend(loc="upper right", bbox_to_anchor=(1.05, 1))
-#     plt.tight_layout()
-
-#     ax.view_init(elev=25, azim=315)
-#     plt.savefig("ss_sz_throughput_3d.pdf")
-
-#     print("finished 3d plot")
