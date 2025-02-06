@@ -7,8 +7,11 @@ x_labels = ["Pipeline 1", "Pipeline 2"]
 pipeline1_labels = ['PWXC', 'BBF', 'SVM', 'THR', 'FFT']
 pipeline2_labels = ['TKEO', 'AVG', 'SVM', 'THR']
 
-pipeline1_power = [2.269184, 30.179328, 3.465, 0.00028, 2846.72]  # Converted to mW
-pipeline2_power = [34.89792, 0.3219456, 3.465, 0.00028]
+pipeline1_latency = [75776.0, 67584.0, 14.32, 0.86, 132779.52] # 143375.18, 276154.7
+pipeline2_latency = [63078.4, 56852.48, 14.32, 0.86]
+
+pipeline1_latency = [x / 1000 for x in pipeline1_latency] # convert to microseconds
+pipeline2_latency = [x / 1000 for x in pipeline2_latency]
 
 # Define colors from a spectrum between specified RGB values
 color_map = {
@@ -25,9 +28,9 @@ plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 
 # Create the figure and subplots
 fig, (ax, ax2) = plt.subplots(2, 1, sharex=True, figsize=(5, 5),
-                              gridspec_kw={'height_ratios': [1, 2]})
+                              gridspec_kw={'height_ratios': [1, 3]})
 
-fig.subplots_adjust(hspace=0.5, top=0.83, left=0.18)
+fig.subplots_adjust(hspace=0.5, top=0.808, left=0.18)
 
 # Increase the size of the diagonal ticks to make the break appear wider
 d = 0.03  # Increase this value for wider breaks
@@ -50,19 +53,19 @@ for axx in [ax, ax2]:
     pipeline1_bottom = 0
     pipeline2_bottom = 0
 
-    for i, (label, power) in enumerate(zip(pipeline1_labels, pipeline1_power)):
+    for i, (label, latency) in enumerate(zip(pipeline1_labels, pipeline1_latency)):
         hatch = '//' if label in ['TKEO', 'AVG'] else ''
-        bar = axx.bar('Pipeline 1', power, bottom=pipeline1_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
+        bar = axx.bar('Pipeline 1', latency, bottom=pipeline1_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
         if label not in [l for _, l in bar_handles]:  # Add handle only if not already added
             bar_handles.append((bar[0], label))
-        pipeline1_bottom += power
+        pipeline1_bottom += latency
 
-    for i, (label, power) in enumerate(zip(pipeline2_labels, pipeline2_power)):
+    for i, (label, latency) in enumerate(zip(pipeline2_labels, pipeline2_latency)):
         hatch = '//' if label in ['TKEO', 'AVG'] else ''
-        bar = axx.bar('Pipeline 2', power, bottom=pipeline2_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
+        bar = axx.bar('Pipeline 2', latency, bottom=pipeline2_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
         if label not in [l for _, l in bar_handles]:  # Add handle only if not already added
             bar_handles.append((bar[0], label))
-        pipeline2_bottom += power
+        pipeline2_bottom += latency
     
     # Enable major grid lines
     axx.grid(which='major', linestyle='-', linewidth=0.7, color='grey', alpha=0.9)  # Darker line for major grid
@@ -75,17 +78,17 @@ for axx in [ax, ax2]:
 
 
 # Adjust the split in the y-axis
-ax.set_ylim(2860, 2890)  # upper plot
-ax2.set_ylim(0, 40)  # lower plot
+ax.set_ylim(250, 300)  # upper plot
+ax2.set_ylim(0, 150)  # lower plot
 
 # Labels and legend
 ax2.set_xlabel("Approach")
 
 # Shared Y-axis label centered vertically
-fig.text(0.01, 0.5, 'Power (mW)', va='center', rotation='vertical')
+fig.text(0.01, 0.5, 'Latency ($\mu$s)', va='center', rotation='vertical')
 
-ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], ncol=4, loc='upper center', bbox_to_anchor=(0.45, 1.7))
+ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], ncol=4, loc='upper center', bbox_to_anchor=(0.44, 2))
 
-plt.savefig('./plots/power_aggregate.pdf', format='pdf')
+plt.savefig('./plots/latency_aggregate.pdf', format='pdf')
 
 plt.show()
