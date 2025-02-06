@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import NullLocator
+import numpy as np
 
 # Data
 x_labels = ["Pipeline 1", "Pipeline 2"]
@@ -11,15 +12,17 @@ pipeline2_power = [34.89792, 0.3219456, 3.465, 0.00028]
 
 # Define colors from a spectrum between specified RGB values
 # Ensuring SVM and THR have the same colors across both pipelines
-color_map = {
-    'PWXC': (18/255, 53/255, 36/255),  # Dark green
-    'BBF': (82/255, 149/255, 118/255),
-    'SVM': (146/255, 245/255, 200/255),  # Same color for SVM in both pipelines
-    'THR': (217/255, 253/255, 239/255),  # Same color for THR in both pipelines
-    'FFT': (247/255, 252/255, 245/255),  # Light green
-    'TKEO': (50/255, 101/255, 77/255),
-    'AVG': (114/255, 197/255, 159/255)
-}
+color_map = {}
+
+# Define custom colors using named colors from matplotlib
+dark_green = np.array((18/255, 53/255, 36/255))
+light_green = np.array((247/255, 252/255, 245/255))
+
+for i, key in enumerate(['PWXC', 'BBF', 'SVM', 'THR', 'FFT', 'TKEO', 'AVG']):
+     # Create a gradient of colors 
+    blend_ratio = i / 6  # Calculate blending ratio based on index
+    blended_color = (1 - blend_ratio) * dark_green + blend_ratio * light_green
+    color_map[key] = blended_color
 
 plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 
