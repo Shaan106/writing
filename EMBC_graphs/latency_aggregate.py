@@ -28,9 +28,9 @@ plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 
 # Create the figure and subplots
 fig, (ax, ax2) = plt.subplots(2, 1, sharex=True, figsize=(5, 5),
-                              gridspec_kw={'height_ratios': [1, 3]})
+                              gridspec_kw={'height_ratios': [1, 4]})
 
-fig.subplots_adjust(hspace=0.5, top=0.808, left=0.18)
+fig.subplots_adjust(hspace=0.5, top=0.927, left=0.18, right=0.717)
 
 # Increase the size of the diagonal ticks to make the break appear wider
 d = 0.03  # Increase this value for wider breaks
@@ -78,8 +78,8 @@ for axx in [ax, ax2]:
 
 
 # Adjust the split in the y-axis
-ax.set_ylim(250, 300)  # upper plot
-ax2.set_ylim(0, 150)  # lower plot
+ax.set_ylim(260, 300)  # upper plot
+ax2.set_ylim(0, 160)  # lower plot
 
 # Labels and legend
 ax2.set_xlabel("Approach")
@@ -87,7 +87,7 @@ ax2.set_xlabel("Approach")
 # Shared Y-axis label centered vertically
 fig.text(0.01, 0.5, 'Latency ($\mu$s)', va='center', rotation='vertical')
 
-ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], ncol=4, loc='upper center', bbox_to_anchor=(0.44, 2))
+ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], loc='center right', bbox_to_anchor=(1.52, -1.5))
 
 plt.savefig('./plots/latency_aggregate.pdf', format='pdf')
 

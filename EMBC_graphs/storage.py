@@ -27,7 +27,7 @@ colors = [np.array([0.07058824, 0.20784314, 0.14117647]),
 plt.rc('font', family='Serif', size=12)
 fig = plt.figure(figsize=(5, 5))
 ax = fig.add_subplot(111, projection='3d')
-fig.subplots_adjust(left=0.02, right=0.849)
+fig.subplots_adjust(left=0.02, right=0.849, top=0.83)
 
 # Set the width and depth of the bars as specified
 bar_width = 0.6
@@ -100,7 +100,7 @@ ax.tick_params(axis='z', labelsize=10)
 
 # Create a custom legend for cell types
 legend_handles = [mpatches.Patch(facecolor=color, label=memory, edgecolor='black') for color, memory in zip(colors, memory_types)]
-legend = ax.legend(legend_handles, memory_types, ncol=4, loc='upper center', bbox_to_anchor=(0.58, 1.1))
+legend = ax.legend(legend_handles, memory_types, loc='upper right', bbox_to_anchor=(1, 1.2))
 
 # plt.tight_layout()
 
