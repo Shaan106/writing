@@ -12,7 +12,8 @@ plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 plt.figure(figsize=(3.5, 3.5))
 
 # Create the bar plot with specified colors, full opacity, and modified bar width
-plt.bar(models, accuracies, color=[(18/255, 53/255, 36/255), (247/255, 252/255, 245/255)], edgecolor='black', alpha=1, width=0.6, zorder=3)
+#plt.bar(models, accuracies, color=[(18/255, 53/255, 36/255), (247/255, 252/255, 245/255)], edgecolor='black', alpha=1, width=0.6, zorder=3)
+plt.bar(models, accuracies, color=[(195/255, 35/255, 25/255), (255/255, 239/255, 225/255)], edgecolor='black', alpha=1, width=0.6, zorder=3)
 
 # Add gridlines with different styles for major and minor
 plt.grid(True, which='major', linestyle='-', linewidth=0.7, color='grey', alpha=0.9)

@@ -15,13 +15,13 @@ pipeline2_latency = [x / 1000 for x in pipeline2_latency]
 
 # Define colors from a spectrum between specified RGB values
 color_map = {
-    'PWXC': np.array([0.07058824, 0.20784314, 0.14117647]),
-    'BBF': np.array([0.22026144, 0.4379085 , 0.27777778]),
-    'SVM': np.array([0.36993464, 0.56797386, 0.41437908]),
-    'THR': np.array([0.51960784, 0.69803922, 0.55098039]),
-    'FFT': np.array([0.66928105, 0.82810458, 0.6875817 ]),
-    'TKEO': np.array([0.81895425, 0.95816993, 0.82418301]),
-    'AVG': np.array([0.96862745, 0.98823529, 0.96078431])
+    'PWXC': np.array([195, 35, 25])/255,    # Darker version of #D92D20
+    'BBF': np.array([207, 75, 45])/255,     # Further darkened version of original BBF
+    'SVM': np.array([215, 120, 90])/255,    # Deeper and darker than the previous adjustment
+    'THR': np.array([225, 160, 120])/255,   # Darkened to maintain the gradient with previous colors
+    'FFT': np.array([249, 200, 160])/255,   # Unchanged as it's already towards the lighter end
+    'TKEO': np.array([255, 224, 204])/255,  # Unchanged from your previous code
+    'AVG': np.array([255, 250, 245])/255    # Whiter version of the original AVG color
 }
 
 plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})

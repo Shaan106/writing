@@ -19,10 +19,11 @@ life_expectancies = [1907334081.0082932, 381466.8162016586, 190733.4081008293, 1
 life_expectancies = [x / 31536000 for x in life_expectancies] # convert to years
 areas = [x / 100 for x in areas] # convert to cm^2
 
-colors = [np.array([0.07058824, 0.20784314, 0.14117647]),
-          np.array([0.36993464, 0.56797386, 0.41437908]),
-          np.array([0.66928105, 0.82810458, 0.6875817 ]),
-          np.array([0.96862745, 0.98823529, 0.96078431])]  # To hold color values
+colors = [np.array([195, 35, 25])/255,    # RGB(217, 45, 32) for #D92D20
+          np.array([215, 120, 90])/255,   # RGB(241, 156, 121) for #F19C79
+          np.array([249, 200, 160])/255,   # RGB(251, 216, 192) for #FBD8C0
+          np.array([255, 250, 245])/255    # RGB(255, 239, 225) for #FFEFE1
+]
 
 plt.rc('font', family='Serif', size=12)
 fig = plt.figure(figsize=(5, 5))
@@ -36,7 +37,8 @@ bar_depth = 0.2
 # Plotting data
 sorted_indices = np.argsort(life_expectancies)  # Sort by life expectancy for plotting
 for i in sorted_indices:
-    ax.bar3d(np.log10(life_expectancies[i]), areas[i], 0, bar_width, bar_depth, powers[i], color=colors[i], zorder=3, hatch='//', edgecolor='black')
+    hatch = '//' if i == 2 else ''
+    ax.bar3d(np.log10(life_expectancies[i]), areas[i], 0, bar_width, bar_depth, powers[i], color=colors[i], zorder=3, hatch='', edgecolor='black')
 
 # Setting labels and applying log scale on the life expectancy axis
 ax.set_xlabel('Life Expectancy (years)', labelpad=15)
@@ -105,6 +107,6 @@ legend = ax.legend(legend_handles, memory_types, loc='upper right', bbox_to_anch
 # plt.tight_layout()
 
 # Save the plot as a PDF
-plt.savefig('./plots/storage.pdf', format='pdf')
+plt.savefig('./plots/storage_2.pdf', format='pdf')
 
 plt.show()
