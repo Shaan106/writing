@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.colors as mcolors
 import matplotlib.patches as mpatches
 
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
 
 # Data
 memory_types = ['STT', 'PCM', 'FeFET', 'RRAM']
@@ -37,11 +40,11 @@ bar_depth = 0.2
 # Plotting data
 sorted_indices = np.argsort(life_expectancies)  # Sort by life expectancy for plotting
 for i in sorted_indices:
-    hatch = '//' if i == 2 else ''
-    ax.bar3d(np.log10(life_expectancies[i]), areas[i], 0, bar_width, bar_depth, powers[i], color=colors[i], zorder=3, hatch='', edgecolor='black')
+    hatch = '//' if memory_types[i] == 'FeFET' else ''
+    ax.bar3d(np.log10(life_expectancies[i]), areas[i], 0, bar_width, bar_depth, powers[i], color=colors[i], zorder=3, hatch=hatch, edgecolor='black')
 
 # Setting labels and applying log scale on the life expectancy axis
-ax.set_xlabel('Life Expectancy (years)', labelpad=15)
+ax.set_xlabel('Longevity (years)', labelpad=15)
 ax.set_ylabel('Area ($cm^2$)', labelpad=15)
 ax.set_zlabel('Power (mW)', labelpad=15)
 
@@ -86,9 +89,9 @@ ax.set_xlim(-5, 3)
 
 black = (175/255, 176/255, 176/255, 1)
 
-ax.zaxis.set_gridline_color((0, black))
-ax.xaxis.set_gridline_color((4, black))
-ax.yaxis.set_gridline_color((6, black))
+# ax.zaxis.set_gridline_color((0, black))
+# ax.xaxis.set_gridline_color((4, black))
+# ax.yaxis.set_gridline_color((6, black))
 
 
 ax.zaxis._axinfo["grid"]["linestyle"] = ":"
@@ -99,14 +102,19 @@ ax.tick_params(axis='x', labelsize=10)
 ax.tick_params(axis='y', labelsize=10)
 ax.tick_params(axis='z', labelsize=10)
 
-
 # Create a custom legend for cell types
-legend_handles = [mpatches.Patch(facecolor=color, label=memory, edgecolor='black') for color, memory in zip(colors, memory_types)]
-legend = ax.legend(legend_handles, memory_types, loc='upper right', bbox_to_anchor=(1, 1.2))
+legend_handles = []
+for color, memory in zip(colors, memory_types):
+    if memory == 'FeFET':
+        patch = mpatches.Patch(facecolor=color, label=memory, edgecolor='black', hatch='//')
+    else:
+        patch = mpatches.Patch(facecolor=color, label=memory, edgecolor='black')
+    legend_handles.append(patch)
 
-# plt.tight_layout()
+legend = ax.legend(legend_handles, memory_types, loc='upper center', bbox_to_anchor=(0.5, 1.05), ncol=len(memory_types), handletextpad=0.15, columnspacing=1)
 
 # Save the plot as a PDF
-plt.savefig('./plots/storage_2.pdf', format='pdf')
+plt.savefig('./plots/storage.pdf', format='pdf')
 
 plt.show()
+

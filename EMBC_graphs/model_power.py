@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
+
 # Data for the components and their total power
 components = ['AVG', 'BBF', 'FFT', 'PWXC', 'SVM', 'THR', 'TKEO']
 total_power = [0.0003219456, 0.030179328, 2.84672, 0.002269184, 0.003465, 2.8e-10, 0.03489792]

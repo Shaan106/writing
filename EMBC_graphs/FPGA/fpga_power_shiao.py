@@ -2,6 +2,11 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import NullLocator
 import numpy as np
 
+import matplotlib
+
+plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
+matplotlib.rcParams['text.usetex'] = True
+
 # Data
 x_labels = ["Pipeline 1", "Pipeline 2"]
 pipeline1_labels = ['PWXC', 'BBF', 'SVM', 'THR', 'FFT']
@@ -19,16 +24,14 @@ pipeline2_power_normalized = [p / pipeline2_total_power * 100 for p in pipeline2
 
 # Define colors from a spectrum between specified RGB values
 color_map = {
-    'PWXC': np.array([0.07058824, 0.20784314, 0.14117647]),
-    'BBF': np.array([0.22026144, 0.4379085 , 0.27777778]),
-    'SVM': np.array([0.36993464, 0.56797386, 0.41437908]),
-    'THR': np.array([0.51960784, 0.69803922, 0.55098039]),
-    'FFT': np.array([0.66928105, 0.82810458, 0.6875817 ]),
-    'TKEO': np.array([0.81895425, 0.95816993, 0.82418301]),
-    'AVG': np.array([0.96862745, 0.98823529, 0.96078431])
+    'PWXC': np.array([195, 35, 25])/255,    # Darker version of #D92D20
+    'BBF': np.array([207, 75, 45])/255,     # Further darkened version of original BBF
+    'SVM': np.array([215, 120, 90])/255,    # Deeper and darker than the previous adjustment
+    'THR': np.array([225, 160, 120])/255,   # Darkened to maintain the gradient with previous colors
+    'FFT': np.array([249, 200, 160])/255,   # Unchanged as it's already towards the lighter end
+    'TKEO': np.array([255, 224, 204])/255,  # Unchanged from your previous code
+    'AVG': np.array([255, 250, 245])/255    # Whiter version of the original AVG color
 }
-
-plt.rcParams.update({'font.size': 12, 'font.family': 'serif'})
 
 # Create the figure and subplot
 fig, ax = plt.subplots(figsize=(5, 5))
@@ -40,7 +43,7 @@ pipeline2_bottom = 0
 
 for i, (label, power) in enumerate(zip(pipeline1_labels, pipeline1_power_normalized)):
     hatch = '//' if label in ['TKEO', 'AVG'] else ''
-    bar = ax.bar('MOCA', power, bottom=pipeline1_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
+    bar = ax.bar('Forsee', power, bottom=pipeline1_bottom, color=color_map[label], edgecolor='black', alpha=1, width=0.6, zorder=3, hatch=hatch)
     if label not in [l for _, l in bar_handles]:  # Add handle only if not already added
         bar_handles.append((bar[0], label))
     pipeline1_bottom += power
@@ -65,11 +68,13 @@ ax.xaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0, 105)
 
 # Labels and legend
-ax.set_xlabel("Approach")
-ax.set_ylabel("Power (%)")
+ax.set_xlabel("Power Model")
+ax.set_ylabel("Power (\%)")
 
-ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], loc='center right', bbox_to_anchor=(1.52, 0.5))
+ax.legend(handles=[h for h, _ in bar_handles], labels=[l for _, l in bar_handles], loc='center left', bbox_to_anchor=(1, 0.5))
 
-plt.savefig('../plots/fpga_power_validation.pdf', format='pdf')
+plt.tight_layout()
+plt.savefig('../plots/fpga_power_validation.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('../plots/fpga_power_validation.png', format='png', bbox_inches='tight')
 
 plt.show()

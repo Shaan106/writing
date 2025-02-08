@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator, LogFormatterSciNotation
 
+
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
+
 # Data for latency comparison
 components = ['AVG', 'BBF', 'FFT', 'PWXC', 'SVM', 'THR', 'TKEO']
 total_latency = [56852.48, 67584.0, 5132779.52, 75776.0, 14.32,  0.86, 63078.4]

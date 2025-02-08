@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator, LogFormatterSciNotation
 
+
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
+
 # Data for components with two bars
 shiao_components = {
     'THR': 2.8e-10,

@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import NullLocator
 import numpy as np
 
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
+
 # Data
 x_labels = ["Pipeline 1", "Pipeline 2"]
 pipeline1_labels = ['PWXC', 'BBF', 'SVM', 'THR', 'FFT']

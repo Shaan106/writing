@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
+
 # Data for the bar plot
 models = ['Pipeline 1', 'Pipeline 2']
 accuracies = [89, 75]
@@ -31,7 +34,7 @@ plt.ylim(0, 100)
 
 # Add labels
 plt.xlabel('Approach')
-plt.ylabel('Accuracy (%)')
+plt.ylabel('Accuracy (\%)')
 
 # Adjust layout to ensure all titles and labels are visible
 plt.tight_layout()
