@@ -9,6 +9,11 @@ import matplotlib.patches as mpatches
 import matplotlib
 matplotlib.rcParams['text.usetex'] = True
 
+'''
+This file requires custom matplotlib code to generate the 3D gridlines correctly.
+Refer to Muhammed for instructions.
+'''
+
 # Data
 memory_types = ['STT', 'PCM', 'FeFET', 'RRAM']
 # areas = [0.352215178, 0.249885986, 0.150765438, 0.358045268]
@@ -83,15 +88,15 @@ ax.set_zticks(np.arange(0, 0.31, 0.05), minor=True)
 # ax.set_yticks(y_ticks_minor, minor=True)
 # ax.set_yticks(y_ticks)
 
-ax.set_xlim(-5, 3)
+# ax.set_xlim(-5, 3)
 # ax.set_ylim(0.1, 0.4)
 # ax.set_zlim(0, 0.04)
 
 black = (175/255, 176/255, 176/255, 1)
 
-# ax.zaxis.set_gridline_color((0, black))
-# ax.xaxis.set_gridline_color((4, black))
-# ax.yaxis.set_gridline_color((6, black))
+ax.zaxis.set_gridline_color((0, black))
+ax.xaxis.set_gridline_color((4, black))
+ax.yaxis.set_gridline_color((6, black))
 
 
 ax.zaxis._axinfo["grid"]["linestyle"] = ":"
